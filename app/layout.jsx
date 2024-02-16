@@ -1,3 +1,5 @@
+import "./global.css";
+
 export const metadata = {
   title: "Todo app",
   description: "Organize your life with this todo app",
@@ -6,7 +8,7 @@ export const metadata = {
 const RootLayout = ({ children }) => {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="bg-[--very-light-gray]">{children}</body>
     </html>
   );
 };
