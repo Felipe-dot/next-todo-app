@@ -8,10 +8,7 @@ const TodoItem = ({ todo }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckBoxClick = () => {
-    console.log("OI AMIGO");
-    if (!isChecked) {
-      setIsChecked((prev) => !prev);
-    }
+    setIsChecked((prev) => !prev);
   };
 
   return (
