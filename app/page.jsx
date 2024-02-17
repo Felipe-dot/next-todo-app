@@ -22,11 +22,11 @@ const Home = () => {
             />
           </div>
           <div className="relative">
-            <div class="absolute inset-y-0 left-0 flex items-center pl-3">
-              <div class="h-5 w-5  border-2 border-[ --dark-grayish-blue] rounded-full"></div>
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+              <div className="h-5 w-5  border-2 border-[ --dark-grayish-blue] rounded-full"></div>
             </div>
             <input
-              className="appearance-none focus:outline-none w-96 h-12 rounded px-10 py-2 placeholder-[--dark-grayish-blue]"
+              className="appearance-none focus:outline-none w-96 h-12 rounded px-10 py-7 placeholder-[--dark-grayish-blue]"
               placeholder="Create a new todo..."
               type="text"
             />
@@ -36,15 +36,14 @@ const Home = () => {
 
       {/* todo list */}
       <div className="relative bottom-12 flex justify-center items-center">
-        <div className="bg-[--very-light-gray] h-[50vh] w-[500px] shadow-md px-5 py-5">
-          <ul>
-            <TodoItem todo={{ title: "teste" }} />
+        <div className="bg-[--very-light-gray] h-[50vh] w-[500px] shadow-md pb-7">
+          <ul className="h-full overflow-y-auto ">
             <TodoItem todo={{ title: "teste" }} />
             <TodoItem todo={{ title: "teste" }} />
             <TodoItem todo={{ title: "teste" }} />
           </ul>
           {/* bottom stats */}
-          <div className="sticky top-[90%] flex justify-between text-sm text-[--dark-grayish-blue]">
+          <div className="sticky top-[90%] flex justify-between text-sm text-[--dark-grayish-blue] px-5">
             <p>5 items left</p>
             <div className="flex justify-around text-[--very-dark-desaturated-blue] w-52 ">
               <p>All</p>
