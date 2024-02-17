@@ -13,8 +13,8 @@
   :root {
     /* Primary */
     --bright-blue: hsl(220, 98%, 61%);
-    --check-background: linear-gradient hsl(192, 100%, 67%) to
-      hsl(280, 87%, 65%);
+    --gradient-color-blue: hsl(192, 100%, 67%);
+    --gradient-color-pink: hsl(280, 87%, 65%);
     /*  Neutral */
     /*  Light Theme */
     --very-light-gray: hsl(0, 0%, 98%);
