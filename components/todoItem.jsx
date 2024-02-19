@@ -17,7 +17,7 @@ const TodoItem = ({ todo }) => {
         <div className="relative">
           {isChecked && (
             <div
-              className="absolute inset-y-0 flex items-center justify-center pl-1.5 z-10"
+              className="absolute inset-y-0 flex items-center justify-center pl-2 z-10"
               onClick={handleCheckBoxClick}
             >
               <Image src={iconCheck} height={15} width={15} alt="check logo" />
@@ -33,8 +33,10 @@ const TodoItem = ({ todo }) => {
               name={todo.title}
             />
             <label
-              className={`px-2 text-lg font-semibold text-[--very-dark-grayish-blue-light] ${
-                isChecked ? "line-through text-[--dark-grayish-blue]" : ""
+              className={`px-4 text-lg text-wrap font-bold text-[--very-dark-grayish-blue-light] ${
+                isChecked
+                  ? "line-through text-[--dark-grayish-blue] font-medium"
+                  : ""
               }`}
               htmlFor={todo.title}
             >
