@@ -1,8 +1,33 @@
+"use client";
+
 import Image from "next/image";
 import moonIcon from "../images/icon-moon.svg";
 import TodoItem from "@/components/todoItem";
+import { useState } from "react";
 
 const Home = () => {
+  const mockTODOList = [
+    { title: "Complete online JavaScript course" },
+    { title: "Job around the park 3x" },
+    { title: "10 minutes meditation" },
+    { title: "Read for 1 hour" },
+    { title: "Pick up groceries" },
+    {
+      title: "Complete Todo App on Frontend Mentor",
+    },
+  ];
+  const [todoList, setTodoList] = useState(mockTODOList);
+  const [inputValue, setInputValue] = useState("");
+
+  function handleKeyPress(event, value) {
+    if (event.key === "Enter") {
+      if (value.trim() !== "") {
+        setTodoList([...todoList, { title: value }]);
+        setInputValue("");
+      }
+    }
+  }
+
   return (
     <>
       {/*  IMAGE */}
@@ -29,28 +54,35 @@ const Home = () => {
               className="appearance-none focus:outline-none w-96 h-12 rounded px-10 py-7 placeholder-[--dark-grayish-blue]"
               placeholder="Create a new todo..."
               type="text"
+              value={inputValue}
+              onChange={(e) => {
+                setInputValue(e.currentTarget.value);
+              }}
+              onKeyUp={(event) => {
+                handleKeyPress(event, inputValue);
+              }}
             />
           </div>
         </div>
       </div>
 
       {/* todo list */}
-      <div className="relative bottom-12 flex justify-center items-center">
-        <div className="bg-[--very-light-gray] h-[50vh] w-[500px] shadow-md pb-7">
+      <div className="relative bottom-12 flex justify-center items-center ">
+        <div className="bg-[--very-light-gray] h-[50vh] w-[500px] shadow-md pb-7 rounded-lg">
           <ul className="h-full overflow-y-auto ">
-            <TodoItem todo={{ title: "teste" }} />
-            <TodoItem todo={{ title: "teste" }} />
-            <TodoItem todo={{ title: "teste" }} />
+            {todoList.map((e) => (
+              <TodoItem key={e.title} todo={{ title: e.title }} />
+            ))}
           </ul>
           {/* bottom stats */}
           <div className="sticky top-[90%] flex justify-between text-sm text-[--dark-grayish-blue] px-5">
-            <p>5 items left</p>
+            <p>{todoList.length} items left</p>
             <div className="flex justify-around text-[--very-dark-desaturated-blue] w-52 ">
-              <p>All</p>
-              <p>Active</p>
-              <p>Completed</p>
+              <p className="cursor-pointer">All</p>
+              <p className="cursor-pointer">Active</p>
+              <p className="cursor-pointer">Completed</p>
             </div>
-            <p>Clear Completed</p>
+            <p className="cursor-pointer">Clear Completed</p>
           </div>
         </div>
       </div>
