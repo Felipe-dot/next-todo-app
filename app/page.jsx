@@ -57,7 +57,7 @@ const Home = () => {
       {/* Drag and Drop */}
       <div className="flex justify-center items-center p-2">
         <h3 className="text-[--dark-grayish-blue]">
-          Drag and drop to reader list
+          Drag and drop to reorder list
         </h3>
       </div>
     </>
