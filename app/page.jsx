@@ -75,7 +75,7 @@ const Home = () => {
       <div className="bg-[url('../images/bg-desktop-light.jpg');] bg-cover bg-center h-80 flex items-center justify-center">
         {/* header */}
         <div className="h-1/2 w-1/2 flex flex-col justify-between items-center">
-          <div className="w-96 flex justify-between items-center">
+          <div className="sm:w-[450px] md:w-[500px] lg:w-[550px] xl:w-[600px] 2xl:w-[700px] flex justify-between items-center">
             <h1 className="text-zinc-50 font-bold text-4xl tracking-[.3em]">
               TODO
             </h1>
@@ -92,7 +92,7 @@ const Home = () => {
               <div className="h-5 w-5  border-2 border-[ --dark-grayish-blue] rounded-full"></div>
             </div>
             <input
-              className="appearance-none focus:outline-none w-96 h-12 rounded px-10 py-7 placeholder-[--dark-grayish-blue]"
+              className="appearance-none focus:outline-none sm:w-[450px] md:w-[500px] lg:w-[550px] xl:w-[600px]  2xl:w-[700px] h-12 rounded px-12 py-7 placeholder-[--dark-grayish-blue]"
               placeholder="Create a new todo..."
               type="text"
               value={inputValue}
@@ -109,25 +109,22 @@ const Home = () => {
 
       {/* todo list */}
       <div className="relative bottom-12 flex justify-center items-center ">
-        <div className="bg-[--very-light-gray] h-[50vh] w-[500px] shadow-md pb-7 rounded-lg">
+        <div className="bg-[--very-light-gray] h-[50vh] sm:w-[450px] md:w-[500px] lg:w-[550px] xl:w-[600px] 2xl:w-[700px] shadow-md pb-7 rounded-lg">
           <ul className="h-full overflow-y-auto ">
-            {/* {todoList.map((e) => (
-              <TodoItem key={e.id} todo={e} onToggle={toggleTodo} />
-            ))} */}
             {renderBasedOnFilterIdx()}
           </ul>
           {/* bottom stats */}
-          <div className="sticky top-[90%] flex justify-between text-sm text-[--dark-grayish-blue] px-5">
+          <div className="sticky top-[90%] flex justify-between  text-sm text-[--dark-grayish-blue]  px-5">
             {todoList.length === 0 ? (
-              <p>No items</p>
+              <p className=" ">No items</p>
             ) : (
-              <p>
+              <p className="">
                 {todoList.filter((todo) => todo.isCompleted === false).length}{" "}
                 items left
               </p>
             )}
 
-            <div className="flex justify-around text-[--very-dark-desaturated-blue] w-52 ">
+            <div className="flex  justify-around text-[--very-dark-desaturated-blue] w-52 ">
               <p
                 onClick={() => setFilterIndex(0)}
                 className={`cursor-pointer  hover:font-bold ${
@@ -154,7 +151,7 @@ const Home = () => {
               </p>
             </div>
             <p
-              className="cursor-pointer hover:font-bold"
+              className="cursor-pointer hover:font-bold "
               onClick={() => clearCompletedTodos()}
             >
               Clear Completed
