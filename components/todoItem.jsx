@@ -1,11 +1,18 @@
 import Image from "next/image";
 import iconCheck from "../images/icon-check.svg";
+import iconCross from "../images/icon-cross.svg";
 
-const TodoItem = ({ todo, onToggle }) => {
+const TodoItem = ({ todo, onToggle, removeTodo }) => {
   return (
     <div className="p-5 cursor-pointer border-b-[1px] border-b-[--dark-grayish-blue]">
       <li>
         <div className="relative">
+          <div
+            className="sm:hidden absolute inset-y-0 right-0 flex items-center px-3"
+            onClick={() => removeTodo(todo.id)}
+          >
+            <Image src={iconCross} height={15} width={15} alt="cross logo" />
+          </div>
           {todo.isCompleted && (
             <div
               className="absolute inset-y-0 flex items-center justify-center pl-2 z-10"

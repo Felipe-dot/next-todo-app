@@ -36,6 +36,12 @@ const Home = () => {
     );
   };
 
+  const removeTodoById = (id) => {
+    setTodoList((prevTodoList) =>
+      prevTodoList.filter((todo) => todo.id !== id)
+    );
+  };
+
   const clearCompletedTodos = () => {
     setTodoList((prevTodoList) =>
       prevTodoList.filter((todo) => todo.isCompleted === false)
@@ -46,33 +52,48 @@ const Home = () => {
     switch (filterIndex) {
       case 0:
         return todoList.map((e) => (
-          <TodoItem key={e.id} todo={e} onToggle={toggleTodo} />
+          <TodoItem
+            key={e.id}
+            todo={e}
+            onToggle={toggleTodo}
+            removeTodo={removeTodoById}
+          />
         ));
       case 1:
         return todoList.map(
           (e) =>
             e.isCompleted === false && (
-              <TodoItem key={e.id} todo={e} onToggle={toggleTodo} />
+              <TodoItem
+                key={e.id}
+                todo={e}
+                onToggle={toggleTodo}
+                removeTodo={removeTodoById}
+              />
             )
         );
       case 2:
         return todoList.map(
           (e) =>
             e.isCompleted === true && (
-              <TodoItem key={e.id} todo={e} onToggle={toggleTodo} />
+              <TodoItem
+                key={e.id}
+                todo={e}
+                onToggle={toggleTodo}
+                removeTodo={removeTodoById}
+              />
             )
         );
     }
   };
 
-  useEffect(() => {
-    console.log(todoList);
-  }, [todoList]);
+  // useEffect(() => {
+  //   console.log(todoList);
+  // }, [todoList]);
 
   return (
     <>
       {/*  IMAGE */}
-      <div className="bg-[url('../images/bg-desktop-light.jpg');] bg-cover bg-center h-60 sm:h-80 flex items-center justify-center">
+      <div className="bg-[url('../images/bg-mobile-light.jpg');] sm:bg-[url('../images/bg-desktop-light.jpg');] bg-cover bg-center h-60 sm:h-80 flex items-center justify-center">
         {/* header */}
         <div className="h-1/2 flex flex-col justify-between items-center">
           <div className="w-[300px] sm:w-[450px] md:w-[500px] lg:w-[550px] xl:w-[600px] 2xl:w-[700px] flex justify-between items-center">
