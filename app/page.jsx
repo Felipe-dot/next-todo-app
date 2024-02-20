@@ -3,30 +3,71 @@
 import Image from "next/image";
 import moonIcon from "../images/icon-moon.svg";
 import TodoItem from "@/components/todoItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const Home = () => {
-  const mockTODOList = [
-    { title: "Complete online JavaScript course" },
-    { title: "Job around the park 3x" },
-    { title: "10 minutes meditation" },
-    { title: "Read for 1 hour" },
-    { title: "Pick up groceries" },
-    {
-      title: "Complete Todo App on Frontend Mentor",
-    },
-  ];
-  const [todoList, setTodoList] = useState(mockTODOList);
+  const [todoList, setTodoList] = useState([]);
+  const [filterIndex, setFilterIndex] = useState(0);
   const [inputValue, setInputValue] = useState("");
 
   function handleKeyPress(event, value) {
     if (event.key === "Enter") {
       if (value.trim() !== "") {
-        setTodoList([...todoList, { title: value }]);
+        setTodoList([
+          ...todoList,
+          { id: uuidv4(), title: value, isCompleted: false },
+        ]);
         setInputValue("");
       }
     }
   }
+
+  const toggleTodo = (id) => {
+    setTodoList(
+      todoList.map((todo) =>
+        todo.id === id
+          ? {
+              ...todo,
+              isCompleted: !todo.isCompleted,
+            }
+          : todo
+      )
+    );
+  };
+
+  const clearCompletedTodos = () => {
+    setTodoList((prevTodoList) =>
+      prevTodoList.filter((todo) => todo.isCompleted === false)
+    );
+  };
+
+  const renderBasedOnFilterIdx = () => {
+    switch (filterIndex) {
+      case 0:
+        return todoList.map((e) => (
+          <TodoItem key={e.id} todo={e} onToggle={toggleTodo} />
+        ));
+      case 1:
+        return todoList.map(
+          (e) =>
+            e.isCompleted === false && (
+              <TodoItem key={e.id} todo={e} onToggle={toggleTodo} />
+            )
+        );
+      case 2:
+        return todoList.map(
+          (e) =>
+            e.isCompleted === true && (
+              <TodoItem key={e.id} todo={e} onToggle={toggleTodo} />
+            )
+        );
+    }
+  };
+
+  useEffect(() => {
+    console.log(todoList);
+  }, [todoList]);
 
   return (
     <>
@@ -70,19 +111,54 @@ const Home = () => {
       <div className="relative bottom-12 flex justify-center items-center ">
         <div className="bg-[--very-light-gray] h-[50vh] w-[500px] shadow-md pb-7 rounded-lg">
           <ul className="h-full overflow-y-auto ">
-            {todoList.map((e) => (
-              <TodoItem key={e.title} todo={{ title: e.title }} />
-            ))}
+            {/* {todoList.map((e) => (
+              <TodoItem key={e.id} todo={e} onToggle={toggleTodo} />
+            ))} */}
+            {renderBasedOnFilterIdx()}
           </ul>
           {/* bottom stats */}
           <div className="sticky top-[90%] flex justify-between text-sm text-[--dark-grayish-blue] px-5">
-            <p>{todoList.length} items left</p>
+            {todoList.length === 0 ? (
+              <p>No items</p>
+            ) : (
+              <p>
+                {todoList.filter((todo) => todo.isCompleted === false).length}{" "}
+                items left
+              </p>
+            )}
+
             <div className="flex justify-around text-[--very-dark-desaturated-blue] w-52 ">
-              <p className="cursor-pointer">All</p>
-              <p className="cursor-pointer">Active</p>
-              <p className="cursor-pointer">Completed</p>
+              <p
+                onClick={() => setFilterIndex(0)}
+                className={`cursor-pointer  hover:font-bold ${
+                  filterIndex === 0 && "text-[--bright-blue] font-bold"
+                }`}
+              >
+                All
+              </p>
+              <p
+                onClick={() => setFilterIndex(1)}
+                className={`cursor-pointer  hover:font-bold   ${
+                  filterIndex === 1 && "text-[--bright-blue] font-bold"
+                }`}
+              >
+                Active
+              </p>
+              <p
+                onClick={() => setFilterIndex(2)}
+                className={`cursor-pointer hover:font-bold    ${
+                  filterIndex === 2 && "text-[--bright-blue] font-bold"
+                }`}
+              >
+                Completed
+              </p>
             </div>
-            <p className="cursor-pointer">Clear Completed</p>
+            <p
+              className="cursor-pointer hover:font-bold"
+              onClick={() => clearCompletedTodos()}
+            >
+              Clear Completed
+            </p>
           </div>
         </div>
       </div>
