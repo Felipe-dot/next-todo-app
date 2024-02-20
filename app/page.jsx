@@ -72,11 +72,11 @@ const Home = () => {
   return (
     <>
       {/*  IMAGE */}
-      <div className="bg-[url('../images/bg-desktop-light.jpg');] bg-cover bg-center h-80 flex items-center justify-center">
+      <div className="bg-[url('../images/bg-desktop-light.jpg');] bg-cover bg-center h-60 sm:h-80 flex items-center justify-center">
         {/* header */}
-        <div className="h-1/2 w-1/2 flex flex-col justify-between items-center">
-          <div className="sm:w-[450px] md:w-[500px] lg:w-[550px] xl:w-[600px] 2xl:w-[700px] flex justify-between items-center">
-            <h1 className="text-zinc-50 font-bold text-4xl tracking-[.3em]">
+        <div className="h-1/2 flex flex-col justify-between items-center">
+          <div className="w-[300px] sm:w-[450px] md:w-[500px] lg:w-[550px] xl:w-[600px] 2xl:w-[700px] flex justify-between items-center">
+            <h1 className="text-2xl text-zinc-50 font-bold sm:text-4xl tracking-[.3em]">
               TODO
             </h1>
             <Image
@@ -89,10 +89,10 @@ const Home = () => {
           </div>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 flex items-center pl-3">
-              <div className="h-5 w-5  border-2 border-[ --dark-grayish-blue] rounded-full"></div>
+              <div className="h-5 w-5 border-2 border-[ --dark-grayish-blue] rounded-full"></div>
             </div>
             <input
-              className="appearance-none focus:outline-none sm:w-[450px] md:w-[500px] lg:w-[550px] xl:w-[600px]  2xl:w-[700px] h-12 rounded px-12 py-7 placeholder-[--dark-grayish-blue]"
+              className="appearance-none focus:outline-none sm:w-[450px] md:w-[500px] lg:w-[550px] xl:w-[600px]  2xl:w-[700px] h-3 sm:h-12 rounded px-12 py-7 placeholder-[--dark-grayish-blue]"
               placeholder="Create a new todo..."
               type="text"
               value={inputValue}
@@ -108,17 +108,17 @@ const Home = () => {
       </div>
 
       {/* todo list */}
-      <div className="relative bottom-12 flex justify-center items-center ">
-        <div className="bg-[--very-light-gray] h-[50vh] sm:w-[450px] md:w-[500px] lg:w-[550px] xl:w-[600px] 2xl:w-[700px] shadow-md pb-7 rounded-lg">
+      <div className="relative bottom-10 sm:bottom-12 flex justify-center items-center ">
+        <div className="bg-[--very-light-gray] h-[50vh] w-[300px] sm:w-[450px] md:w-[500px] lg:w-[550px] xl:w-[600px] 2xl:w-[700px] shadow-md pb-7 rounded-lg">
           <ul className="h-full overflow-y-auto ">
             {renderBasedOnFilterIdx()}
           </ul>
           {/* bottom stats */}
-          <div className="sticky top-[90%] flex justify-between  text-sm text-[--dark-grayish-blue]  px-5">
+          <div className="sticky top-[90%] flex justify-center sm:justify-between  text-sm text-[--dark-grayish-blue]  px-5">
             {todoList.length === 0 ? (
-              <p className=" ">No items</p>
+              <p className=" hidden sm:block ">No items</p>
             ) : (
-              <p className="">
+              <p className=" hidden sm:block">
                 {todoList.filter((todo) => todo.isCompleted === false).length}{" "}
                 items left
               </p>
@@ -151,7 +151,7 @@ const Home = () => {
               </p>
             </div>
             <p
-              className="cursor-pointer hover:font-bold "
+              className="cursor-pointer hover:font-bold hidden sm:block  "
               onClick={() => clearCompletedTodos()}
             >
               Clear Completed
@@ -161,9 +161,9 @@ const Home = () => {
       </div>
       {/* Drag and Drop */}
       <div className="flex justify-center items-center p-2">
-        <h3 className="text-[--dark-grayish-blue]">
+        <p className="text-[--dark-grayish-blue]">
           Drag and drop to reorder list
-        </h3>
+        </p>
       </div>
     </>
   );
