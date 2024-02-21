@@ -21,7 +21,7 @@ const TodoItem = ({ todo, onToggle, removeTodo }) => {
               <Image src={iconCheck} height={15} width={15} alt="check logo" />
             </div>
           )}
-          <div className="grid grid-cols-10  items-center ">
+          <div className="sm:grid sm:grid-cols-10  grid grid-cols-6 items-center ">
             <input
               className={`w-[1.8em] h-[1.8em]  appearance-none border-[2px] dark:border-[--very-dark-grayish-blue-light] shadow-sm rounded-full cursor-pointer checked:bg-gradient-to-r from-[--gradient-color-blue] to-[--gradient-color-pink] z-0 ${
                 todo.isCompleted && "border-none"
@@ -33,7 +33,9 @@ const TodoItem = ({ todo, onToggle, removeTodo }) => {
               name={todo.title}
             />
             <label
-              className={`text-lg text-wrap  break-words col-start-2 col-end-10 overflow-hidden truncate font-bold text-[--very-dark-grayish-blue-light] dark:text-[--ligh-grayish-blue] ${
+              className={`text-lg text-wrap break-words col-start-2 
+              col-end-6
+              sm:col-start-2 sm:col-end-10 overflow-hidden truncate font-bold text-[--very-dark-grayish-blue-light] dark:text-[--ligh-grayish-blue] ${
                 todo.isCompleted
                   ? "line-through  text-[--dark-grayish-blue] dark:text-[--very-dark-grayish-blue-light] font-medium "
                   : ""
