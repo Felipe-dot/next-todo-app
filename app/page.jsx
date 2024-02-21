@@ -1,9 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import moonIcon from "../images/icon-moon.svg";
 import TodoItem from "@/components/todoItem";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 const Home = () => {
@@ -86,34 +85,24 @@ const Home = () => {
     }
   };
 
-  // useEffect(() => {
-  //   console.log(todoList);
-  // }, [todoList]);
-
   return (
     <>
       {/*  IMAGE */}
-      <div className="bg-[url('../images/bg-mobile-light.jpg');] sm:bg-[url('../images/bg-desktop-light.jpg');] bg-cover bg-center h-60 sm:h-80 flex items-center justify-center">
+      <div className="bg-[url('../images/bg-mobile-light.jpg');] dark:bg-[url('../images/bg-mobile-dark.jpg')] sm:bg-[url('../images/bg-desktop-light.jpg');]  dark:sm:bg-[url('../images/bg-desktop-dark.jpg');] bg-cover bg-center h-60 sm:h-80 flex items-center justify-center">
         {/* header */}
         <div className="h-1/2 flex flex-col justify-between items-center">
           <div className="w-[300px] sm:w-[450px] md:w-[500px] lg:w-[550px] xl:w-[600px] 2xl:w-[700px] flex justify-between items-center">
             <h1 className="text-2xl text-zinc-50 font-bold sm:text-4xl tracking-[.3em]">
               TODO
             </h1>
-            <Image
-              className="cursor-pointer"
-              src={moonIcon}
-              alt="moon icon"
-              height={25}
-              width={25}
-            />
+            <div className="cursor-pointer bg-cover bg-center bg-[url('../images/icon-moon.svg')] dark:bg-[url('../images/icon-sun.svg')] h-7 w-7 sm:h-8 sm:w-8" />
           </div>
-          <div className="relative">
+          <div className="relative ">
             <div className="absolute inset-y-0 left-0 flex items-center pl-3">
-              <div className="h-5 w-5 border-2 border-[ --dark-grayish-blue] rounded-full"></div>
+              <div className="h-7 w-7 border-2 border-[--dark-grayish-blue] dark:border-[--very-dark-grayish-blue-light] rounded-full"></div>
             </div>
             <input
-              className="appearance-none focus:outline-none sm:w-[450px] md:w-[500px] lg:w-[550px] xl:w-[600px]  2xl:w-[700px] h-3 sm:h-12 rounded px-12 py-7 placeholder-[--dark-grayish-blue]"
+              className="appearance-none focus:outline-none dark:bg-[--very-dark-desaturated-blue] dark:text-[--very-light-gray] w-[300px]  sm:w-[450px] md:w-[500px] lg:w-[550px] xl:w-[600px]  2xl:w-[700px] h-3 sm:h-12 rounded px-14 py-7 placeholder-[--dark-grayish-blue]"
               placeholder="Create a new todo..."
               type="text"
               value={inputValue}
@@ -129,17 +118,19 @@ const Home = () => {
       </div>
 
       {/* todo list */}
-      <div className="relative bottom-10 sm:bottom-12 flex justify-center items-center ">
-        <div className="bg-[--very-light-gray] h-[50vh] w-[300px] sm:w-[450px] md:w-[500px] lg:w-[550px] xl:w-[600px] 2xl:w-[700px] shadow-md pb-7 rounded-lg">
+      <div className="relative bottom-10 sm:bottom-12 flex justify-center items-center">
+        <div className="bg-[--very-light-gray] dark:bg-[--very-dark-desaturated-blue] h-[50vh] w-[300px] sm:w-[450px] md:w-[500px] lg:w-[550px] xl:w-[600px] 2xl:w-[700px] shadow-md pb-7 rounded-lg">
           <ul className="h-full overflow-y-auto ">
             {renderBasedOnFilterIdx()}
           </ul>
           {/* bottom stats */}
           <div className="sticky top-[90%] flex justify-center sm:justify-between  text-sm text-[--dark-grayish-blue]  px-5">
             {todoList.length === 0 ? (
-              <p className=" hidden sm:block ">No items</p>
+              <p className=" hidden sm:block text-[--dark-grayish-blue]  ">
+                No items
+              </p>
             ) : (
-              <p className=" hidden sm:block">
+              <p className=" hidden sm:block text-[--dark-grayish-blue] ">
                 {todoList.filter((todo) => todo.isCompleted === false).length}{" "}
                 items left
               </p>
@@ -148,31 +139,37 @@ const Home = () => {
             <div className="flex  justify-around text-[--very-dark-desaturated-blue] w-52 ">
               <p
                 onClick={() => setFilterIndex(0)}
-                className={`cursor-pointer  hover:font-bold ${
-                  filterIndex === 0 && "text-[--bright-blue] font-bold"
+                className={`cursor-pointer  hover:font-bold  ${
+                  filterIndex === 0
+                    ? "text-[--bright-blue] font-bold"
+                    : "text-[--dark-grayish-blue] font-bold"
                 }`}
               >
                 All
               </p>
               <p
                 onClick={() => setFilterIndex(1)}
-                className={`cursor-pointer  hover:font-bold   ${
-                  filterIndex === 1 && "text-[--bright-blue] font-bold"
+                className={`cursor-pointer  hover:font-bold    ${
+                  filterIndex === 1
+                    ? "text-[--bright-blue] font-bold"
+                    : "text-[--dark-grayish-blue] font-bold"
                 }`}
               >
                 Active
               </p>
               <p
                 onClick={() => setFilterIndex(2)}
-                className={`cursor-pointer hover:font-bold    ${
-                  filterIndex === 2 && "text-[--bright-blue] font-bold"
+                className={`cursor-pointer hover:font-bold  ${
+                  filterIndex === 2
+                    ? "text-[--bright-blue] font-bold"
+                    : "text-[--dark-grayish-blue] font-bold"
                 }`}
               >
                 Completed
               </p>
             </div>
             <p
-              className="cursor-pointer hover:font-bold hidden sm:block  "
+              className="cursor-pointer text-[--dark-grayish-blue] hover:font-bold hidden sm:block  "
               onClick={() => clearCompletedTodos()}
             >
               Clear Completed

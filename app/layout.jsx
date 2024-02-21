@@ -7,8 +7,10 @@ export const metadata = {
 
 const RootLayout = ({ children }) => {
   return (
-    <html lang="en">
-      <body className="bg-[--very-light-gray]">{children}</body>
+    <html lang="en" className="dark">
+      <body className="bg-[--very-light-gray] dark:bg-[--very-dark-blue]">
+        {children}
+      </body>
     </html>
   );
 };
