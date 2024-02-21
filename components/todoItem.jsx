@@ -21,9 +21,9 @@ const TodoItem = ({ todo, onToggle, removeTodo }) => {
               <Image src={iconCheck} height={15} width={15} alt="check logo" />
             </div>
           )}
-          <div className="flex items-center ">
+          <div className="grid grid-cols-10  items-center ">
             <input
-              className={`w-[1.8em] h-[1.8em] appearance-none border-[2px] dark:border-[--very-dark-grayish-blue-light] shadow-sm rounded-full cursor-pointer checked:bg-gradient-to-r from-[--gradient-color-blue] to-[--gradient-color-pink] z-0 ${
+              className={`w-[1.8em] h-[1.8em]  appearance-none border-[2px] dark:border-[--very-dark-grayish-blue-light] shadow-sm rounded-full cursor-pointer checked:bg-gradient-to-r from-[--gradient-color-blue] to-[--gradient-color-pink] z-0 ${
                 todo.isCompleted && "border-none"
               }`}
               type="checkbox"
@@ -33,9 +33,9 @@ const TodoItem = ({ todo, onToggle, removeTodo }) => {
               name={todo.title}
             />
             <label
-              className={`px-4 text-lg text-wrap font-bold text-[--very-dark-grayish-blue-light] dark:text-[--ligh-grayish-blue] ${
+              className={`text-lg text-wrap  break-words col-start-2 col-end-10 overflow-hidden truncate font-bold text-[--very-dark-grayish-blue-light] dark:text-[--ligh-grayish-blue] ${
                 todo.isCompleted
-                  ? "line-through  text-[--dark-grayish-blue] dark:text-[--very-dark-grayish-blue-light] font-medium"
+                  ? "line-through  text-[--dark-grayish-blue] dark:text-[--very-dark-grayish-blue-light] font-medium "
                   : ""
               }`}
               htmlFor={todo.title}
