@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import TodoItem from "@/components/todoItem";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -9,6 +8,21 @@ const Home = () => {
   const [todoList, setTodoList] = useState([]);
   const [filterIndex, setFilterIndex] = useState(0);
   const [inputValue, setInputValue] = useState("");
+
+  const toggleLightMode = () => {
+    // if (typeof window !== "undefined") {
+    console.log("oi");
+    var html = document.querySelector("html");
+
+    if (html.classList.contains("dark")) {
+      html.classList.remove("dark");
+      html.classList.add("light");
+    } else {
+      html.classList.remove("light");
+      html.classList.add("dark");
+    }
+    // }
+  };
 
   function handleKeyPress(event, value) {
     if (event.key === "Enter") {
@@ -95,10 +109,13 @@ const Home = () => {
             <h1 className="text-2xl text-zinc-50 font-bold sm:text-4xl tracking-[.3em]">
               TODO
             </h1>
-            <div className="cursor-pointer bg-cover bg-center bg-[url('../images/icon-moon.svg')] dark:bg-[url('../images/icon-sun.svg')] h-7 w-7 sm:h-8 sm:w-8" />
+            <div
+              onClick={() => toggleLightMode()}
+              className="cursor-pointer bg-cover bg-center bg-[url('../images/icon-moon.svg')] dark:bg-[url('../images/icon-sun.svg')] h-7 w-7 sm:h-8 sm:w-8"
+            />
           </div>
           <div className="relative ">
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+            <div className="absolute inset-y-0 left-1 flex items-center pl-3">
               <div className="h-7 w-7 border-2 border-[--dark-grayish-blue] dark:border-[--very-dark-grayish-blue-light] rounded-full"></div>
             </div>
             <input
