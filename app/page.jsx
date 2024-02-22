@@ -3,6 +3,7 @@
 import TodoItem from "@/components/todoItem";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 
 const Home = () => {
   const [todoList, setTodoList] = useState([]);
@@ -10,18 +11,27 @@ const Home = () => {
   const [inputValue, setInputValue] = useState("");
 
   const toggleLightMode = () => {
-    // if (typeof window !== "undefined") {
-    console.log("oi");
-    var html = document.querySelector("html");
+    if (typeof window !== "undefined") {
+      var html = document.querySelector("html");
 
-    if (html.classList.contains("dark")) {
-      html.classList.remove("dark");
-      html.classList.add("light");
-    } else {
-      html.classList.remove("light");
-      html.classList.add("dark");
+      if (html.classList.contains("dark")) {
+        html.classList.remove("dark");
+        html.classList.add("light");
+      } else {
+        html.classList.remove("light");
+        html.classList.add("dark");
+      }
     }
-    // }
+  };
+
+  const handleOnDragEnd = (result) => {
+    if (result.destination) {
+      const list = Array.from(todoList);
+      const [reorderedList] = list.splice(result.source.index, 1);
+      list.splice(result.destination.index, 0, reorderedList);
+
+      setTodoList(list);
+    }
   };
 
   function handleKeyPress(event, value) {
@@ -64,35 +74,38 @@ const Home = () => {
   const renderBasedOnFilterIdx = () => {
     switch (filterIndex) {
       case 0:
-        return todoList.map((e) => (
+        return todoList.map((e, idx) => (
           <TodoItem
             key={e.id}
             todo={e}
             onToggle={toggleTodo}
             removeTodo={removeTodoById}
+            index={idx}
           />
         ));
       case 1:
         return todoList.map(
-          (e) =>
+          (e, idx) =>
             e.isCompleted === false && (
               <TodoItem
                 key={e.id}
                 todo={e}
                 onToggle={toggleTodo}
                 removeTodo={removeTodoById}
+                index={idx}
               />
             )
         );
       case 2:
         return todoList.map(
-          (e) =>
+          (e, idx) =>
             e.isCompleted === true && (
               <TodoItem
                 key={e.id}
                 todo={e}
                 onToggle={toggleTodo}
                 removeTodo={removeTodoById}
+                index={idx}
               />
             )
         );
@@ -116,7 +129,7 @@ const Home = () => {
           </div>
           <div className="relative ">
             <div className="absolute inset-y-0 left-1 flex items-center pl-3">
-              <div className="h-7 w-7 border-2 border-[--dark-grayish-blue] dark:border-[--very-dark-grayish-blue-light] rounded-full"></div>
+              <div className="h-7 w-7 border-2  dark:border-[--very-dark-grayish-blue-light] rounded-full"></div>
             </div>
             <input
               className="appearance-none focus:outline-none dark:bg-[--very-dark-desaturated-blue] dark:text-[--very-light-gray] w-[300px]  sm:w-[450px] md:w-[500px] lg:w-[550px] xl:w-[600px]  2xl:w-[700px] h-3 sm:h-12 rounded px-14 py-7 placeholder-[--dark-grayish-blue]"
@@ -137,9 +150,20 @@ const Home = () => {
       {/* todo list */}
       <div className="relative bottom-10 sm:bottom-12 flex justify-center items-center">
         <div className="bg-[--very-light-gray] dark:bg-[--very-dark-desaturated-blue] h-[50vh] w-[300px] sm:w-[450px] md:w-[500px] lg:w-[550px] xl:w-[600px] 2xl:w-[700px] shadow-md pb-7 rounded-lg">
-          <ul className="h-full overflow-y-auto ">
-            {renderBasedOnFilterIdx()}
-          </ul>
+          <DragDropContext onDragEnd={handleOnDragEnd}>
+            <Droppable droppableId="todoList">
+              {(provided) => (
+                <ul
+                  className="h-full overflow-y-auto"
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                >
+                  {renderBasedOnFilterIdx()}
+                  {provided.placeholder}
+                </ul>
+              )}
+            </Droppable>
+          </DragDropContext>
           {/* bottom stats */}
           <div className="sticky top-[90%] flex justify-center sm:justify-between  text-sm text-[--dark-grayish-blue]  px-5">
             {todoList.length === 0 ? (
