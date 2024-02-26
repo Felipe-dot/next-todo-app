@@ -1,7 +1,7 @@
 "use client";
 
 import TodoItem from "@/components/todoItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 
@@ -10,6 +10,27 @@ const Home = () => {
   const [filterIndex, setFilterIndex] = useState(0);
   const [inputValue, setInputValue] = useState("");
 
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.localStorage) {
+      const theme = localStorage.getItem("theme");
+      if (theme) {
+        var html = document.querySelector("html");
+        html.classList.add(theme);
+      }
+      const data = JSON.parse(localStorage.getItem("data"));
+
+      if (data) {
+        setTodoList(data);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (todoList.length > 0) {
+      localStorage.setItem("data", JSON.stringify(todoList));
+    }
+  }, [todoList]);
+
   const toggleLightMode = () => {
     if (typeof window !== "undefined") {
       var html = document.querySelector("html");
@@ -17,11 +38,23 @@ const Home = () => {
       if (html.classList.contains("dark")) {
         html.classList.remove("dark");
         html.classList.add("light");
+        localStorage.setItem("theme", "light");
       } else {
         html.classList.remove("light");
         html.classList.add("dark");
+        localStorage.setItem("theme", "dark");
       }
     }
+  };
+
+  const getDataFromLocalStorage = () => {
+    // Verifica se os dados existem no localStorage
+    if (!theme || !data) {
+      // Se não existirem, retorna um valor padrão
+      return { theme: "light", data: [] };
+    }
+
+    return { theme, data };
   };
 
   const handleOnDragEnd = (result) => {
@@ -29,7 +62,6 @@ const Home = () => {
       const list = Array.from(todoList);
       const [reorderedList] = list.splice(result.source.index, 1);
       list.splice(result.destination.index, 0, reorderedList);
-
       setTodoList(list);
     }
   };
