@@ -101,6 +101,7 @@ const Home = () => {
     setTodoList((prevTodoList) =>
       prevTodoList.filter((todo) => todo.isCompleted === false)
     );
+    localStorage.setItem("data", JSON.stringify(todoList));
   };
 
   const renderBasedOnFilterIdx = () => {
