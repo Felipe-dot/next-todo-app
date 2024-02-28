@@ -47,16 +47,6 @@ const Home = () => {
     }
   };
 
-  const getDataFromLocalStorage = () => {
-    // Verifica se os dados existem no localStorage
-    if (!theme || !data) {
-      // Se não existirem, retorna um valor padrão
-      return { theme: "light", data: [] };
-    }
-
-    return { theme, data };
-  };
-
   const handleOnDragEnd = (result) => {
     if (result.destination) {
       const list = Array.from(todoList);
